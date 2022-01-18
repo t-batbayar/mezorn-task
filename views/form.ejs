@@ -1,24 +1,37 @@
 <%- include("./parts/header") %>
 
     <form action="/" method="POST" enctype="multipart/form-data">
-
         <label for="register">Регистрийн дугаар: </label>
-        <input type="text" placeholder="Регистрийн дугаар" name="register" required>
+        <input type="text" placeholder="Регистрийн дугаар (Латинаар)" name="register" required>
+        <% if (register) { %>
+            <input type="checkbox" disabled checked>
+        <% } %>
 
         <br><br>
 
         <label for="passport">Иргэний үнэмлэхний нүүр зураг:</label>
         <input type="file" accept="image/*" name="passport" required>
-        
+        <% if (passport) { %>
+            <input type="checkbox" disabled checked>
+        <% } %>
+
         <br><br>
 
         <label for="selfie">Үнэмлэхээ барьсан зураг:</label>
         <input type="file" accept="image/*" name="selfie" required>
+        <% if (selfie) { %>
+            <input type="checkbox" disabled checked>
+        <% } %>
 
-        <br><br>
-        <br><br>
+        <br>
 
         <button>Submit</button>
+
+        <br>
+        <br>
+        <% if (message && message.length) { %>
+            <%- message %>
+        <% } %>
     </form>
 
 <%- include("./parts/footer") %>
