@@ -21,6 +21,7 @@ const port = parseInt(PE.PORT, 10) || 13000
 
 app.set('views', './views')
 app.set('view engine','ejs')
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
@@ -66,7 +67,7 @@ app.post("/", upload.fields(imageFields), async (req,res) => {
         register: true,
         passport: true,
         selfie: true,
-        message: '',
+        message: 'Хэрэглэгчийн мэдээллийг амжилттай хадгаллаа',
     }
 
     const { passport, selfie } = req.files
@@ -141,8 +142,11 @@ app.post("/", upload.fields(imageFields), async (req,res) => {
         newUser.firstnameEng = userData.firstnameEng
         newUser.registrationNumberMn = userData.registrationNumberMn
         newUser.registrationNumberEn = userData.registrationNumberEn
-    
+        newUser.passportUrl = passport[0].location
+        newUser.selfieUrl = selfie[0].location
         const savedUser = await newUser.save()
+
+        console.log('Sucessfully saved the user', savedUser);
 
     } catch (error) {
         if (passport && passport.length) {
@@ -186,8 +190,8 @@ app.post("/", upload.fields(imageFields), async (req,res) => {
     return res.render('form', formError)
 })
 
-app.use(function (req, res, next) {
-    res.status(404).send("Sorry can't find that!")
+app.use((_req, res, _next) => {
+    res.status(404).send("Таны хайсан зам олдсонгүй!")
 })
 
 app.listen(port, () => {

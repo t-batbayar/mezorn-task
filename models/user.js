@@ -8,7 +8,9 @@ const UserSchema = new mongoose.Schema({
     firstname: String,
     firstnameEng: String,
     registrationNumberMn: String,
-    registrationNumberEn: String
+    registrationNumberEn: String,
+    passportUrl: String,
+    selfieUrl: String,
 });
   
 module.exports = mongoose.model("User", UserSchema);
